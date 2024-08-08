@@ -1,23 +1,58 @@
 # Random Forest Package
 
-A Python package to facilitate random forest modeling. This package provides functionalities for creating, training, preprocessing, and evaluating random forest models with custom exception handling.
+A Python package to facilitate random forest modeling, supporting both classification and regression tasks using object-oriented design principles.
 
 ## Installation
 
-First, ensure you have [Poetry](https://python-poetry.org/docs/#installation) installed. Then, you can install the package and its dependencies using:
+To install the package, use:
 
 ```sh
-poetry install
+pip install random-forest-package
 ```
 ### Usage
 
-Creating a Random Forest Model
-To create a random forest model:
+Creating and Using a Random Forest Classifier
 
 ```py
-from random_forest_package.model import create_random_forest
+from random_forest_package.classifier import RandomForestClassifierModel
+from random_forest_package.trainer import ModelTrainer
+from random_forest_package.evaluator import ModelEvaluator
 
-model = create_random_forest(n_estimators=100, max_depth=None, random_state=42)
+# Create a Random Forest Classifier
+classifier = RandomForestClassifierModel(n_estimators=100, max_depth=10, random_state=42)
+
+# Train the Classifier
+trainer = ModelTrainer(classifier)
+trainer.train(X_train, y_train)
+
+# Evaluate the Classifier
+evaluator = ModelEvaluator(classifier)
+accuracy, conf_matrix, class_report = evaluator.evaluate(X_test, y_test)
+
+print("Accuracy:", accuracy)
+print("Confusion Matrix:\n", conf_matrix)
+print("Classification Report:\n", class_report)
+
+```
+Creating and Using a Random Forest Regressor
+
+```py
+from random_forest_package.regressor import RandomForestRegressorModel
+from random_forest_package.trainer import ModelTrainer
+from random_forest_package.evaluator import ModelEvaluator
+
+# Create a Random Forest Regressor
+regressor = RandomForestRegressorModel(n_estimators=100, max_depth=10, random_state=42)
+
+# Train the Regressor
+trainer = ModelTrainer(regressor)
+trainer.train(X_train, y_train)
+
+# Evaluate the Regressor
+evaluator = ModelEvaluator(regressor)
+mse = evaluator.evaluate(X_test, y_test)
+
+print("Mean Squared Error:", mse)
 ```
 
 ### Preprocessing Data
@@ -34,28 +69,6 @@ y = pd.Series([0, 1, 0])
 X_train, X_test, y_train, y_test = preprocess_data(X, y, test_size=0.2, random_state=42)
 ```
 
-### Training the Model
-To train the random forest model:
-
-
-```py
-from random_forest_package.train import train_model
-
-trained_model = train_model(model, X_train, y_train)
-```
-
-### Evaluating the Model
-To evaluate the model:
-
-```py
-from random_forest_package.evaluate import evaluate_model
-
-accuracy, conf_matrix, class_report = evaluate_model(trained_model, X_test, y_test)
-print(f'Accuracy: {accuracy}')
-print(f'Confusion Matrix: \n{conf_matrix}')
-print(f'Classification Report: \n{class_report}')
-```
-
 ## Custom Exceptions
 This package provides custom exceptions for better error handling:
 
@@ -68,12 +81,18 @@ Example of handling a custom exception:
 
 
 ```py
-from random_forest_package.exceptions import ModelCreationError
+class ModelCreationError(Exception):
+    """Raised when there is an error in creating the model."""
+    pass
 
-try:
-    model = create_random_forest(n_estimators="invalid")
-except ModelCreationError as e:
-    print(e)
+class TrainingError(Exception):
+    """Raised when there is an error during training."""
+    pass
+
+class EvaluationError(Exception):
+    """Raised when there is an error during evaluation."""
+    pass
+
 ```
 
 ## Testing
@@ -91,25 +110,29 @@ random_forest_package/
 │
 ├── random_forest_package/
 │   ├── __init__.py
-│   ├── model.py
-│   ├── preprocess.py
-│   ├── train.py
-│   ├── evaluate.py
-│   ├── utils.py
-│   └── exceptions.py
+│   ├── base_model.py          # Contains the abstract base class for the models
+│   ├── classifier.py          # Contains the RandomForestClassifier class
+│   ├── regressor.py           # Contains the RandomForestRegressor class
+│   ├── preprocess.py          # Contains data preprocessing classes or functions
+│   ├── trainer.py             # Contains classes for training models
+│   ├── evaluator.py           # Contains classes for evaluating models
+│   ├── utils.py               # Utility functions or classes
+│   └── exceptions.py          # Custom exceptions
 │
 ├── tests/
 │   ├── __init__.py
-│   ├── test_model.py
-│   ├── test_preprocess.py
-│   ├── test_train.py
-│   ├── test_evaluate.py
-│   └── test_utils.py
+│   ├── test_classifier.py     # Tests for the classifier
+│   ├── test_regressor.py      # Tests for the regressor
+│   ├── test_preprocess.py     # Tests for preprocessing
+│   ├── test_trainer.py        # Tests for training
+│   ├── test_evaluator.py      # Tests for evaluation
+│   └── test_utils.py          # Tests for utility functions
 │
 ├── .gitignore
 ├── LICENSE
 ├── README.md
 └── pyproject.toml
+
 ```
 
 ## License
