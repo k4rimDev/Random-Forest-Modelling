@@ -11,4 +11,4 @@ def preprocess_data(X, y, test_size=0.2, random_state=None):
         X_test = scaler.transform(X_test)
         return X_train, X_test, y_train, y_test
     except Exception as e:
-        raise PreprocessingError(f"Failed to preprocess data: {e}")
+        raise PreprocessingError(f"Failed to preprocess data: {e}") from e
