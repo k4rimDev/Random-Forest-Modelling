@@ -8,11 +8,6 @@ jobs:
   pypi-publish:
     name: Publish release to PyPI
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/project/random-forest-package
-    permissions:
-      id-token: write
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -28,3 +23,5 @@ jobs:
           python setup.py sdist bdist_wheel  # Could also be python -m build
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
