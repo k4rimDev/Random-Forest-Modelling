@@ -1,4 +1,4 @@
-name: random_forest_package
+name: random_forest_packages
 
 on:
   release:
