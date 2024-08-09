@@ -1,15 +1,65 @@
 # Random Forest Package
 
-A Python package to facilitate random forest modeling, supporting both classification and regression tasks using object-oriented design principles.
+A Python package for advanced Random Forest modeling, including classification and regression, hyperparameter tuning, and model visualization.
+
+## Features
+
+- **Random Forest Modeling**: Supports `RandomForestClassifier` and `RandomForestRegressor`.
+- **Model Tuning**: Perform hyperparameter tuning using grid search and randomized search.
+- **Model Evaluation**: Evaluate model performance with cross-validation.
+- **Visualization**: Visualize model performance with confusion matrices, ROC curves, and precision-recall curves.
+- **Custom Exceptions**: Handles errors with custom exception classes.
 
 ## Installation
 
-To install the package, use:
+You can install the package using pip:
 
-```sh
+```bash
 pip install random-forest-package
 ```
-### Usage
+## Usage
+
+- Basic Example:
+```py
+from random_forest_package.model import RandomForestModel
+from random_forest_package.tuner import ModelTuner
+from random_forest_package.visualizer import ModelVisualizer
+
+# Initialize and train the model
+rf_model = RandomForestModel(n_estimators=100, random_state=42)
+rf_model.train(X_train, y_train)
+
+# Perform hyperparameter tuning
+tuner = ModelTuner(rf_model)
+param_grid = {'n_estimators': [50, 100, 200], 'max_depth': [None, 10, 20]}
+tuner.grid_search(X_train, y_train, param_grid)
+
+# Visualize model performance
+visualizer = ModelVisualizer(rf_model)
+visualizer.plot_confusion_matrix(X_test, y_test)
+visualizer.plot_roc_curve(X_test, y_test)
+visualizer.plot_precision_recall_curve(X_test, y_test)
+```
+
+- Advanced Tuning Example:
+```py
+from random_forest_package.tuner import ModelTuner
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
+
+# Load data
+X, y = load_iris(return_X_y=True)
+
+# Initialize and tune the model
+model = RandomForestClassifier()
+tuner = ModelTuner(model)
+param_distributions = {'n_estimators': [10, 50, 100], 'max_depth': [None, 10, 20]}
+tuner.randomized_search(X, y, param_distributions, n_iter=10)
+
+# Cross-validation
+results = tuner.cross_validate(X, y)
+print(f"Mean score: {results['mean_score']}, Std score: {results['std_score']}")
+```
 
 Creating and Using a Random Forest Classifier
 
@@ -17,6 +67,8 @@ Creating and Using a Random Forest Classifier
 from random_forest_package.classifier import RandomForestClassifierModel
 from random_forest_package.trainer import ModelTrainer
 from random_forest_package.evaluator import ModelEvaluator
+from random_forest_package.tuner import ModelTuner
+from random_forest_package.visualizer import ModelVisualizer
 
 # Create a Random Forest Classifier
 classifier = RandomForestClassifierModel(n_estimators=100, max_depth=10, random_state=42)
@@ -29,6 +81,18 @@ trainer.train(X_train, y_train)
 evaluator = ModelEvaluator(classifier)
 accuracy, conf_matrix, class_report = evaluator.evaluate(X_test, y_test)
 
+# Tune the Classifier's Hyperparameters
+param_grid = {'n_estimators': [50, 100, 200], 'max_depth': [None, 10, 20, 30]}
+tuner = ModelTuner(classifier, param_grid, search_type='grid')
+best_params = tuner.tune(X_train, y_train)
+
+# Visualize the Classifier's Performance
+visualizer = ModelVisualizer(classifier)
+visualizer.plot_confusion_matrix(X_test, y_test)
+visualizer.plot_roc_curve(X_test, y_test)
+visualizer.plot_precision_recall_curve(X_test, y_test)
+
+print("Best Parameters:", best_params)
 print("Accuracy:", accuracy)
 print("Confusion Matrix:\n", conf_matrix)
 print("Classification Report:\n", class_report)
@@ -40,6 +104,8 @@ Creating and Using a Random Forest Regressor
 from random_forest_package.regressor import RandomForestRegressorModel
 from random_forest_package.trainer import ModelTrainer
 from random_forest_package.evaluator import ModelEvaluator
+from random_forest_package.tuner import ModelTuner
+from random_forest_package.visualizer import ModelVisualizer
 
 # Create a Random Forest Regressor
 regressor = RandomForestRegressorModel(n_estimators=100, max_depth=10, random_state=42)
@@ -52,7 +118,14 @@ trainer.train(X_train, y_train)
 evaluator = ModelEvaluator(regressor)
 mse = evaluator.evaluate(X_test, y_test)
 
+# Tune the Regressor's Hyperparameters
+param_grid = {'n_estimators': [50, 100, 200], 'max_depth': [None, 10, 20, 30]}
+tuner = ModelTuner(regressor, param_grid, search_type='random')
+best_params = tuner.tune(X_train, y_train)
+
+print("Best Parameters:", best_params)
 print("Mean Squared Error:", mse)
+
 ```
 
 ### Preprocessing Data

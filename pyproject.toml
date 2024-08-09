@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "random-forest-package"
-version = "0.1.5"
+version = "0.1.6"
 description = "A Python package to facilitate random forest modeling."
 authors = ["Karim Mirzaguliyev <karimmirzaguliyev@gmail.com>"]
 readme = "README.md"
