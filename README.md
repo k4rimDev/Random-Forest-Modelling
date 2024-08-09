@@ -69,6 +69,24 @@ y = pd.Series([0, 1, 0])
 X_train, X_test, y_train, y_test = preprocess_data(X, y, test_size=0.2, random_state=42)
 ```
 
+### Visualization
+Visualization functions can be used to generate plots of model performance:
+```py
+from random_forest_package.visualizer import ModelVisualizer
+
+# Initialize the visualizer
+visualizer = ModelVisualizer(rf_model)
+
+# Plot confusion matrix
+visualizer.plot_confusion_matrix(X_test, y_test)
+
+# Plot ROC curve
+visualizer.plot_roc_curve(X_test, y_test)
+
+# Plot precision-recall curve
+visualizer.plot_precision_recall_curve(X_test, y_test)
+```
+
 ## Custom Exceptions
 This package provides custom exceptions for better error handling:
 
@@ -76,6 +94,8 @@ This package provides custom exceptions for better error handling:
 * `PreprocessingError`: Raised when there is an error during data preprocessing.
 * `TrainingError`: Raised when there is an error during model training.
 * `EvaluationError`: Raised when there is an error during model evaluation.
+* `VisualizationError`: Raised when there is an error during visualization.
+
 
 Example of handling a custom exception:
 
@@ -117,6 +137,7 @@ random_forest_package/
 │   ├── trainer.py             # Contains classes for training models
 │   ├── evaluator.py           # Contains classes for evaluating models
 │   ├── utils.py               # Utility functions or classes
+│   ├── visualizer.py          # Utility visualize cases
 │   └── exceptions.py          # Custom exceptions
 │
 ├── tests/

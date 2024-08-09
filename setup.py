@@ -3,14 +3,16 @@ from setuptools import setup, find_packages
 
 setup(
     name='random_forest_package',
-    version='0.1',
+    version='0.1.4',
     packages=find_packages(),
     install_requires=[
         'scikit-learn',
         'numpy',
         'pandas',
         'flake8',
-        'lint'
+        'lint',
+        'matplotlib',
+        'seaborn'
     ],
     author='Karim Mirzaguliyev',
     author_email='karimmirzaguliyev@gmail.com',
