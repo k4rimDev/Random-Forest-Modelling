@@ -35,3 +35,9 @@ class VisualizationError(RandomForestPackageError):
     def __init__(self, message="Error during visualization"):
         self.message = message
         super().__init__(self.message)
+
+class TuningError(RandomForestPackageError):
+    """Raised when there is an error during visualization."""
+    def __init__(self, message="Error during tuning"):
+        self.message = message
+        super().__init__(self.message)
