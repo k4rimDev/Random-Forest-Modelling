@@ -19,7 +19,7 @@ setup(
     description='A package to facilitate random forest modeling',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/k4rimDev/random_forest_package',
+    url='https://github.com/k4rimDev/Random-Forest-Modelling',
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',

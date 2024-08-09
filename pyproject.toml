@@ -2,7 +2,7 @@
 name = "random-forest-package"
 version = "0.1.4"
 description = "A Python package to facilitate random forest modeling."
-authors = ["Karim Mirzaguliyev <kenanovkenan299@gmail.com>"]
+authors = ["Karim Mirzaguliyev <karimmirzaguliyev@gmail.com>"]
 readme = "README.md"
 packages = [{include = "random_forest_package", from = "random_forest_package"}]
 
