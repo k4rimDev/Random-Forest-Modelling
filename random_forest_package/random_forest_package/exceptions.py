@@ -29,3 +29,9 @@ class EvaluationError(RandomForestPackageError):
     def __init__(self, message="Error during model evaluation"):
         self.message = message
         super().__init__(self.message)
+
+class VisualizationError(RandomForestPackageError):
+    """Raised when there is an error during visualization."""
+    def __init__(self, message="Error during visualization"):
+        self.message = message
+        super().__init__(self.message)
